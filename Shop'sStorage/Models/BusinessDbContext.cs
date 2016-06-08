@@ -34,6 +34,22 @@ namespace ShopSStorage.Models
             _context.SaveChanges();
         }
 
+        public void AddNewCathegory(Cathegory cathegory)
+        {
+            _context.Cathegories.Add(cathegory);
+            _context.SaveChanges();
+        }
+
+        public void AddNewProduct(Product product)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+        }
+
+        public ICollection<Product> GetProducts(Cathegory cathegory)
+        {
+            return _context.Cathegories.Where(c =>c.CathegoryId == cathegory.CathegoryId).Select(p => p.Products).Single().ToList<Product>();
+        }
         #region Idisposable member
 
         public void Dispose()
