@@ -1,0 +1,63 @@
+﻿<Window x:Class="ShopSStorage.Views.NewProductWindow"
+        x:Name="ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShopSStorage.Views"
+        xmlns:models="clr-namespace:ShopSStorage.Models"
+        mc:Ignorable="d"
+        Title="NewProductWindow" Height="300" Width="300" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Name:</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
+                 Text="{Binding Product.ProductName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Total Starage Amount:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
+                 Text="{Binding Product.StorageAmount, Mode=TwoWay}"/>
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Deail Price:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" 
+                 Text="{Binding Product.DetailPrice, Mode=TwoWay}"/>
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Cathegory:</Label>
+        <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" IsReadOnly="True" 
+                     Text="{Binding Product.Cathegory.CathegoryName,Mode=OneWay}">
+            </TextBox>
+            <Button Grid.Column="1" HorizontalAlignment="Right" Content="Select" Command="{Binding CanSelectCommand}"/>
+        </Grid>
+        <Button Grid.Column="0" Grid.Row="4" 
+                Command="{Binding AddNewProductCommand}"
+                CommandParameter="{Binding ElementName=ProductWindow}">Add/Save</Button>
+        <ListView x:Name="LstViewCathegories" 
+                  Grid.Row="4" 
+                  Grid.Column="1" 
+                  ItemsSource="{Binding Cathegories}"
+                  Visibility="{Binding IsVisible}"
+                  SelectedItem="{Binding Product.Cathegory, Mode=TwoWay}">
+            <ListView.Resources>
+                <DataTemplate DataType="{x:Type models:Cathegory}">
+                    <Grid>
+                        <Label Content="{Binding CathegoryName}"></Label>
+                    </Grid>
+                </DataTemplate>
+            </ListView.Resources>
+        </ListView>
+
+    </Grid>
+</Window>

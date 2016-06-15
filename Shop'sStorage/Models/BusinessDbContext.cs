@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Windows.Input;
 using ShopSStorage.Schemats;
@@ -42,7 +43,7 @@ namespace ShopSStorage.Models
 
         public void AddNewProduct(Product product)
         {
-            _context.Products.Add(product);
+            _context.Products.AddOrUpdate(product);
             _context.SaveChanges();
         }
 
