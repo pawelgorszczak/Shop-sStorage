@@ -1,7 +1,7 @@
 ﻿namespace ShopSStorage.ViewModels
 {
     using ShopSStorage.Models;
-    using ShopSStorage.Schemats;
+    using MvvmSchemats;
     using ShopSStorage.Views;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -9,23 +9,14 @@
 
     public class MainViewModel : ViewModel
     {
+        #region Members
         private readonly BusinessDbContext _context;
-        public ICollection<Cathegory> Cathegories { get; private set; }
+        public ObservableCollection<Cathegory> Cathegories { get; private set; }
         private Cathegory _selectedCathegory;
         private Product _selectedProduct;
-        public ICollection<Product> Products { get; private set; }
+        public ObservableCollection<Product> Products { get; private set; }
 
-        public MainViewModel() : this(new BusinessDbContext())
-        {
-        }
 
-        public MainViewModel(BusinessDbContext context)
-        {
-            Cathegories = new ObservableCollection<Cathegory>();
-            Products = new ObservableCollection<Product>();
-            _context = context;
-            GetCathegoriesList();
-        }
 
         public Product SelectedProduct
         {
@@ -43,6 +34,7 @@
             {
                 _selectedCathegory = value;
                 OnPropertyChanged("IsSelected");
+                OnPropertyChanged("IsSelectedAndCanBeDeleted");
                 if (IsSelected)
                 {
                     GetProductsList();
@@ -58,10 +50,24 @@
             get { return _selectedCathegory != null; }
         }
 
-        public bool CanBeDeleted
+        public bool IsSelectedAndCanBeDeleted
         {
-            // TODO: Can be deleted only when the cathegory has no assotiaton with any product
-            get { return false; }
+            get
+            {
+                
+                if (IsSelected) 
+                {
+                    if (_context.GetProducts(_selectedCathegory).Count != 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
         public void GetProductsList()
         {
@@ -72,72 +78,86 @@
                     Products.Add(p);
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Commands
-        /// </summary>
-        public ICommand AddNewProductCommand
+        #region Constructors
+        public MainViewModel() : this(new BusinessDbContext())
         {
-            get
-            {
-                return new ActionCommand(anpc => AddNewProduct());
-            }
         }
-        public ICommand AddNewCathegoryCommand
+
+        public MainViewModel(BusinessDbContext context)
         {
-            get
-            {
-                return new ActionCommand(ancc => AddNewCathegory());
-            }
+            Cathegories = new ObservableCollection<Cathegory>();
+            Products = new ObservableCollection<Product>();
+            _context = context;
+            GetCathegoriesList();
         }
-        public ICommand DeleteSelectedCathegoryCommand
-        {
-            get
-            {
-                return new ActionCommand(dsc => DeleteSelectedCathegory());
-            }
-        }
-        public ICommand GetCathegoriesListCommand
-        {
-            get { return new ActionCommand(c => GetCathegoriesList()); }
-        }
-        public  ICommand EditSelectedProductCommand { get { return new ActionCommand(espc => EditSelectedProduct()); } }
+        #endregion
+
+        #region Command and Command's Functions
+        public ICommand EditSelectedCathegoryCommand { get { return new RelayCommand(EditSelectedCathegory);} }
+        public ICommand DeleteSelectedProductCommand { get { return new RelayCommand(DeleteSelectedProduct);} }
+        public ICommand AddNewProductCommand{get{return new RelayCommand(AddNewProduct);}}
+        public ICommand AddNewCathegoryCommand{get{return new RelayCommand(AddNewCathegory);}}
+        public ICommand DeleteSelectedCathegoryCommand{get{return new RelayCommand(DeleteSelectedCathegory);}}
+        public ICommand GetCathegoriesListCommand{get { return new RelayCommand(GetCathegoriesList); }}
+        public  ICommand EditSelectedProductCommand { get { return new RelayCommand(EditSelectedProduct); } }
 
         /// <summary>
         /// Command's Methods
         /// </summary>
+        private void EditSelectedCathegory()
+        {
+            CathegoryWindow cathegoryWindow = new CathegoryWindow {DataContext = new CathegoryViewModel(_selectedCathegory)};
+            cathegoryWindow.ShowDialog();
+        }
+        private void DeleteSelectedProduct()
+        {
+            if (ProductIsSelected)
+            {
+                _selectedProduct.Cathegory = _selectedCathegory;
+                _context.DeleteProduct(_selectedProduct);
+                Products.Remove(_selectedProduct);
+                OnPropertyChanged("IsSelectedAndCanBeDeleted");
+                
+            }
+        }
         private void EditSelectedProduct()
         {
-            NewProductWindow viewNewProductWindow = new NewProductWindow { DataContext = new ProductViewModel(SelectedProduct) };
-            viewNewProductWindow.ShowDialog();
+            ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(SelectedProduct) };
+            viewProductWindow.ShowDialog();
         }
         private void AddNewProduct()
         {
-            NewProductWindow viewNewProductWindow = new NewProductWindow {DataContext = new ProductViewModel()};
-            viewNewProductWindow.ShowDialog();
+            if (IsSelected)
+            {
+                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(new Product() {Cathegory = _selectedCathegory}) };
+                viewProductWindow.ShowDialog();
+            }
+            else
+            {
+                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel() };
+                viewProductWindow.ShowDialog();
+            }
+            
             GetProductsList();
             OnPropertyChanged("Products");
         }
         private void AddNewCathegory()
         {
-            var cat = new Cathegory()
-            {
-                CathegoryName = "new Cathegory"
-            };
-
-        _context.AddNewCathegory(cat);
-            Cathegories.Add(cat);
-            SelectedCathegory = null;
+            CathegoryWindow cathegoryWindow = new CathegoryWindow { DataContext = new CathegoryViewModel() };
+            cathegoryWindow.ShowDialog();
+            GetCathegoriesList();
         }
         private void DeleteSelectedCathegory()
         {
-            _context.DeleteCathegory(SelectedCathegory);
             if (SelectedCathegory != null)
             {
+                _context.DeleteCathegory(SelectedCathegory);
                 Cathegories.Remove(SelectedCathegory);
                 SelectedCathegory = null;
+                Products.Clear();
             }
-            
         }
         private void GetCathegoriesList()
         {
@@ -145,5 +165,6 @@
             foreach (var c in _context.GetCathegories())
                 Cathegories.Add(c);
         }
+#endregion
     }
 }

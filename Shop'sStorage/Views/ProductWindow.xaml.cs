@@ -6,9 +6,9 @@
     /// <summary>
     /// Interaction logic for ProductWindow.xaml
     /// </summary>
-    public partial class NewProductWindow : Window
+    public partial class ProductWindow : Window
     {
-        public NewProductWindow()
+        public ProductWindow()
         {
             InitializeComponent();
         }

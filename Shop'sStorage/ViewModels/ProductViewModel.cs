@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Input;
-using ShopSStorage.Models;
-using ShopSStorage.Schemats;
-using ShopSStorage.Views;
-
-namespace ShopSStorage.ViewModels
+﻿namespace ShopSStorage.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Input;
+    using MvvmSchemats;
+    using ShopSStorage.Models;
+    using ShopSStorage.Views;
+
     public class ProductViewModel : ViewModel
     {
+#region Members
         private readonly BusinessDbContext _context;
         public ICollection<Cathegory> Cathegories { get; private set; }
-        public Product _product;
+        private Product _product;
         private enum LstViewVisibility
         {
             Hidden,
@@ -42,13 +43,16 @@ namespace ShopSStorage.ViewModels
                 OnPropertyChanged("IsVisible");
             }
         }
+#endregion
+
+#region Constructors
         public ProductViewModel() : this(new BusinessDbContext())
         {
             _product = new Product();
         }
         public ProductViewModel(Product product) : this(new BusinessDbContext())
         {
-            _product = new Product();
+            //_product = new Product();
             _product = product;
         }
         public ProductViewModel(BusinessDbContext context)
@@ -59,21 +63,26 @@ namespace ShopSStorage.ViewModels
             foreach (var cat in _context.GetCathegories())
                 Cathegories.Add(cat);
             OnPropertyChanged("Cathegories");
+            this.AddNewProductCommand = new RelayCommand<Window>(this.AddNewProduct);
         }
+        #endregion
 
-        /// <summary>
-        /// Commands
-        /// </summary>
-        public ICommand AddNewProductCommand { get { return new ActionCommand(anpc => AddNewProduct());} }
-        public ICommand CanSelectCommand { get { return new ActionCommand(csc => MakeItVisible()); }  }
+#region Command and Cammand's Funcionts
 
-        private void AddNewProduct()
+        //public ICommand AddNewProductCommand { get { return new RelayCommand<Window>(AddNewProduct);} }
+        public RelayCommand<Window> AddNewProductCommand { get; private set; }
+        public ICommand CanSelectCommand { get { return new RelayCommand(MakeItVisible); }  }
+
+        private void AddNewProduct(Window productWindow)
         {
             _context.AddNewProduct(Product);
+            productWindow.Close();
         }
         private void MakeItVisible()
         {
             IsVisible = LstViewVisibility.Visible.ToString();
         }
+        #endregion
+        
     }
 }

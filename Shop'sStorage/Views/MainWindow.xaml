@@ -23,12 +23,13 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Height="19" Margin="2" Command="{Binding AddNewCathegoryCommand}">New</Button>
                 <Button Height="19" Margin="2" Command="{Binding GetCathegoriesListCommand}">Refresh</Button>
-                <Button Height="19" Margin="2" IsEnabled="{Binding IsSelected}">Edit</Button>
-                <Button Height="19" Margin="2" Command="{Binding DeleteSelectedCathegoryCommand}" IsEnabled="{Binding IsSelected}">Delete</Button>
+                <Button Height="19" Margin="2" Command="{Binding EditSelectedCathegoryCommand}" IsEnabled="{Binding IsSelected}">Edit</Button>
+                <Button Height="19" Margin="2" Command="{Binding DeleteSelectedCathegoryCommand}" IsEnabled="{Binding IsSelectedAndCanBeDeleted}">Delete</Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Height="19" Margin="2" Command="{Binding AddNewProductCommand}">Add</Button>
                 <Button Margin="2" Command="{Binding EditSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Edit</Button>
+                <Button Margin="2" Command="{Binding DeleteSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Delete</Button>
             </StackPanel>
         </Grid>
 

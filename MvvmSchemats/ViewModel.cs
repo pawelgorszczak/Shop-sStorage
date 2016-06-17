@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ShopSStorage.Schemats
+namespace MvvmSchemats
 {
     public class ViewModel : ObservableObject, IDataErrorInfo
     {
@@ -13,17 +16,17 @@ namespace ShopSStorage.Schemats
             get { return OnValidate(columnName); }
         }
 
-        public string Error
-        {
-            get { throw new NotSupportedException(); }
+        public string Error { get; private set;
+
+            //get { throw new NotSupportedException(); }
         }
 
         protected virtual string OnValidate(string propertyName)
         {
             var context = new ValidationContext(this)
-                        {  
-                            MemberName = propertyName
-                        };
+            {
+                MemberName = propertyName
+            };
             var results = new Collection<ValidationResult>();
             bool isValid = Validator.TryValidateObject(this, context, results, true);
 
@@ -37,4 +40,5 @@ namespace ShopSStorage.Schemats
             return null;
         }
     }
+
 }

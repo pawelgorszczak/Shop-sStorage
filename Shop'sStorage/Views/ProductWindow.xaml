@@ -1,5 +1,5 @@
-﻿<Window x:Class="ShopSStorage.Views.NewProductWindow"
-        x:Name="ProductWindow"
+﻿<Window x:Class="ShopSStorage.Views.ProductWindow"
+        x:Name="ProductWindowObject"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ShopSStorage.Views"
         xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
-        Title="NewProductWindow" Height="300" Width="300" ResizeMode="NoResize">
+        Title="ProductWindow" Height="300" Width="300" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Name:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
-                 Text="{Binding Product.ProductName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                 Text="{Binding Product.ProductName, Mode=TwoWay}"/>
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Total Starage Amount:</Label>
         <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
                  Text="{Binding Product.StorageAmount, Mode=TwoWay}"/>
@@ -43,7 +43,7 @@
         </Grid>
         <Button Grid.Column="0" Grid.Row="4" 
                 Command="{Binding AddNewProductCommand}"
-                CommandParameter="{Binding ElementName=ProductWindow}">Add/Save</Button>
+                CommandParameter="{Binding ElementName=ProductWindowObject}">Add/Save</Button>
         <ListView x:Name="LstViewCathegories" 
                   Grid.Row="4" 
                   Grid.Column="1" 

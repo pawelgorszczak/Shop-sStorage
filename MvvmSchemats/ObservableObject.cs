@@ -1,10 +1,14 @@
-﻿using ShopSStorage.Properties;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using MvvmSchemats.Annotations;
 
-namespace ShopSStorage.Schemats
+namespace MvvmSchemats
 {
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
     public class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

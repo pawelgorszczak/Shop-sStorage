@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Windows.Input;
-using ShopSStorage.Schemats;
 
 namespace ShopSStorage.Models
 {
@@ -37,7 +36,7 @@ namespace ShopSStorage.Models
 
         public void AddNewCathegory(Cathegory cathegory)
         {
-            _context.Cathegories.Add(cathegory);
+            _context.Cathegories.AddOrUpdate(cathegory);
             _context.SaveChanges();
         }
 
@@ -47,6 +46,11 @@ namespace ShopSStorage.Models
             _context.SaveChanges();
         }
 
+        public void DeleteProduct(Product product)
+        {
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
         public ICollection<Product> GetProducts(Cathegory cathegory)
         {
             return _context.Cathegories.Where(c =>c.CathegoryId == cathegory.CathegoryId).Select(p => p.Products).Single().ToList<Product>();
