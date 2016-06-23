@@ -55,6 +55,19 @@
             //_product = new Product();
             _product = product;
         }
+
+        public ProductViewModel(BusinessDbContext context, Product product)
+        {
+            _product = product;
+            IsVisible = LstViewVisibility.Hidden.ToString();
+            _context = context;
+            Cathegories = new ObservableCollection<Cathegory>();
+            foreach (var cat in _context.GetCathegories())
+                Cathegories.Add(cat);
+            OnPropertyChanged("Cathegories");
+            this.AddNewProductCommand = new RelayCommand<Window>(this.AddNewProduct);
+
+        }
         public ProductViewModel(BusinessDbContext context)
         {
             IsVisible = LstViewVisibility.Hidden.ToString();

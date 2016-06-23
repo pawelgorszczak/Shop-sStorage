@@ -131,7 +131,7 @@
         {
             if (IsSelected)
             {
-                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(new Product() {Cathegory = _selectedCathegory}) };
+                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context, new Product() { Cathegory = _selectedCathegory}) };
                 viewProductWindow.ShowDialog();
             }
             else
