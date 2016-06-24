@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace MvvmSchemats
 {
-    public class ViewModel : ObservableObject, IDataErrorInfo
+    public class ViewModel : ObservableObject//, IDataErrorInfo
     {
-        public string this[string columnName]
+        /*public string this[string columnName]
         {
             get { return OnValidate(columnName); }
         }
 
-        public string Error { get; private set;
-
-            //get { throw new NotSupportedException(); }
+        public string Error
+        {
+            get { throw new NotSupportedException(); }
         }
 
         protected virtual string OnValidate(string propertyName)
@@ -39,6 +39,7 @@ namespace MvvmSchemats
             }
             return null;
         }
+        */
     }
 
 }

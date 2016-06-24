@@ -1,4 +1,7 @@
-﻿namespace ShopSStorage.ViewModels
+﻿using System.Diagnostics;
+using System.Windows.Controls;
+
+namespace ShopSStorage.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -12,27 +15,78 @@
     using ShopSStorage.Models;
     using ShopSStorage.Views;
 
-    public class ProductViewModel : ViewModel
+    public class ProductViewModel : ViewModel, IDataErrorInfo
     {
 #region Members
         private readonly BusinessDbContext _context;
         public ICollection<Cathegory> Cathegories { get; private set; }
         private Product _product;
+        private string _test;
+#region Product Members
+
+        public string ProductName
+        {
+            get { return _product.ProductName; }
+            set
+            {
+                _product.ProductName = value;
+                //OnPropertyChanged("ProductName");
+                OnPropertyChanged("NewProductIsValid");
+            }
+        }
+        public int StorageAmount
+        {
+            get { return _product.StorageAmount; }
+            set
+            {
+                _product.StorageAmount = value;
+                OnPropertyChanged("StorageAmount");
+                OnPropertyChanged("NewProductIsValid");
+            }
+        }
+        public decimal DetailPrice
+        {
+            get { return _product.DetailPrice; }
+            set
+            {
+                _product.DetailPrice = value;
+                OnPropertyChanged("DetailPrice");
+                OnPropertyChanged("NewProductIsValid");
+            }
+        }
+        public  Cathegory Cathegory
+        {
+            get { return _product.Cathegory; }
+            set
+            {
+                _product.Cathegory = value;
+                OnPropertyChanged("CathegoryName");
+                OnPropertyChanged("NewProductIsValid");
+            }
+        }
+
+        public string CathegoryName
+        {
+            get {
+                if (_product.Cathegory == null)
+                {
+                    return string.Empty;
+                }
+                return _product.Cathegory.CathegoryName;
+            }
+        }
+#endregion
+
         private enum LstViewVisibility
         {
             Hidden,
             Visible
         }
         private string _isVisible;
-
-        public Product Product
+        public string Test
         {
-            get { return _product;}
-            set
-            {
-                _product = value;
-                OnPropertyChanged("Product");
-            }
+            get { return _test; }
+            set { _test = value; }
         }
         public string IsVisible
         {
@@ -41,6 +95,19 @@
             {
                 _isVisible = value;
                 OnPropertyChanged("IsVisible");
+            }
+        }
+
+        public bool NewProductIsValid
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_product.ProductName) ||
+                    string.IsNullOrWhiteSpace(_product.StorageAmount.ToString()) ||
+                    string.IsNullOrWhiteSpace(_product.DetailPrice.ToString()) ||
+                    _product.Cathegory == null)    
+                    return false;
+                return true;
             }
         }
 #endregion
@@ -85,17 +152,57 @@
         //public ICommand AddNewProductCommand { get { return new RelayCommand<Window>(AddNewProduct);} }
         public RelayCommand<Window> AddNewProductCommand { get; private set; }
         public ICommand CanSelectCommand { get { return new RelayCommand(MakeItVisible); }  }
-
+        
         private void AddNewProduct(Window productWindow)
         {
-            _context.AddNewProduct(Product);
-            productWindow.Close();
+            if (NewProductIsValid)
+            {
+                _context.AddNewProduct(_product);
+                productWindow.Close();
+            }
         }
         private void MakeItVisible()
         {
             IsVisible = LstViewVisibility.Visible.ToString();
         }
         #endregion
-        
+        #region IdataErrorInfo
+        public string Error
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+
+                switch (columnName)
+                {
+                    case nameof(ProductName):
+                        if (string.IsNullOrWhiteSpace(ProductName))
+                            return "Product name can not be empty";
+                        break;
+                    case nameof(StorageAmount):
+                        if (string.IsNullOrWhiteSpace(StorageAmount.ToString()))
+                            return "Storage Amount can not be null";
+                        break;
+                    case nameof(DetailPrice):
+                        if (string.IsNullOrWhiteSpace(DetailPrice.ToString()))
+                            return "Detail price can not be null";
+                        break;
+                    case nameof(CathegoryName):
+                        if (string.IsNullOrWhiteSpace(CathegoryName))
+                            return "Cathegory can not be empty";
+                        break;
+                }
+                return string.Empty;
+            }
+        }
+        #endregion
+
     }
 }

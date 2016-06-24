@@ -23,13 +23,13 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Name:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
-                 Text="{Binding Product.ProductName, Mode=TwoWay}"/>
+                 Text="{Binding ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Total Starage Amount:</Label>
         <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
-                 Text="{Binding Product.StorageAmount, Mode=TwoWay}"/>
+                 Text="{Binding StorageAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
         <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Deail Price:</Label>
         <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" 
-                 Text="{Binding Product.DetailPrice, Mode=TwoWay}"/>
+                 Text="{Binding DetailPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Cathegory:</Label>
         <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -37,19 +37,19 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" IsReadOnly="True" 
-                     Text="{Binding Product.Cathegory.CathegoryName,Mode=OneWay}">
+                     Text="{Binding CathegoryName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
             </TextBox>
             <Button Grid.Column="1" HorizontalAlignment="Right" Content="Select" Command="{Binding CanSelectCommand}"/>
         </Grid>
         <Button Grid.Column="0" Grid.Row="4" 
                 Command="{Binding AddNewProductCommand}"
-                CommandParameter="{Binding ElementName=ProductWindowObject}">Add/Save</Button>
+                CommandParameter="{Binding ElementName=ProductWindowObject}" IsEnabled="{Binding NewProductIsValid}">Add/Save</Button>
         <ListView x:Name="LstViewCathegories" 
                   Grid.Row="4" 
                   Grid.Column="1" 
                   ItemsSource="{Binding Cathegories}"
                   Visibility="{Binding IsVisible}"
-                  SelectedItem="{Binding Product.Cathegory, Mode=TwoWay}">
+                  SelectedItem="{Binding Cathegory, Mode=TwoWay}">
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type models:Cathegory}">
                     <Grid>

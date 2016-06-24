@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,19 +10,23 @@ using ShopSStorage.Models;
 
 namespace ShopSStorage.ViewModels
 {
-    public class CathegoryViewModel : ViewModel
+    public class CathegoryViewModel : ViewModel, IDataErrorInfo
     {
         #region Members
 
         private BusinessDbContext _context;
         private Cathegory _cathegory;
 
-        public Cathegory Cathegory
+        public string CathegoryName
         {
-            get { return _cathegory; }
-            set { _cathegory = value; }
+            get { return _cathegory.CathegoryName; }
+            set
+            {
+                _cathegory.CathegoryName = value;
+                OnPropertyChanged("IsValid");
+            }
         }
-
+        public bool IsValid { get { return !string.IsNullOrWhiteSpace(CathegoryName); } }
         #endregion
 
         #region Constructors
@@ -30,10 +35,11 @@ namespace ShopSStorage.ViewModels
         {
             _cathegory = new Cathegory();
         }
+
         public CathegoryViewModel(Cathegory cathegory) : this(new BusinessDbContext())
         {
             _cathegory = new Cathegory();
-            Cathegory = cathegory;
+            _cathegory = cathegory;
         }
 
         public CathegoryViewModel(BusinessDbContext context)
@@ -47,13 +53,33 @@ namespace ShopSStorage.ViewModels
         #region Commands and Commands' Fucntions
 
         public RelayCommand<Window> AddNewCathegoryCommand { get; private set; }
-
+    
         public void AddNewCathegory(Window window)
         {
             _context.AddNewCathegory(_cathegory);
             window.Close();
         }
-        
+
+        #endregion
+
+        #region IdataErrorInfo
+        public string Error
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == nameof(CathegoryName) && string.IsNullOrWhiteSpace(CathegoryName))
+                    return "Cathegory name cannot be null";
+                return string.Empty;
+            }
+        }
 
         #endregion
     }
