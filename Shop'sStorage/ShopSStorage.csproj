@@ -64,16 +64,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\SalesHistory.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\AddToHistoryMainViewModel.cs" />
     <Compile Include="ViewModels\CathegoryViewModel.cs" />
+    <Compile Include="ViewModels\DeleteViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="Views\AddToHistory\AddToHistoryMainWindow.xaml.cs">
+      <DependentUpon>AddToHistoryMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddToHistory\AddUserControl.xaml.cs">
+      <DependentUpon>AddUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CathegoryWindow.xaml.cs">
       <DependentUpon>CathegoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeleteWindow.xaml.cs">
+      <DependentUpon>DeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductWindow.xaml.cs">
       <DependentUpon>ProductWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddToHistory\AddToHistoryMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddToHistory\AddUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CathegoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

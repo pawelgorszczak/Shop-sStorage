@@ -1,0 +1,35 @@
+﻿<Window x:Class="ShopSStorage.Views.AddToHistory.AddToHistoryMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AddToHistoryMainWindow" Height="388.286" Width="468" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Height="19">
+            <Button 
+                Margin="0,0,10,0"
+                Command="{Binding AddNewCommand}"
+                >Add New</Button>
+            <Button Margin="0,0,10,0">Edit</Button>
+            <Button
+                Command="{Binding DeleteCommand}"
+                >Delete</Button>
+        </StackPanel>
+        <ContentControl Grid.Row="1" Content="{Binding AddToHistoryMainWindowContentControl, Mode=OneWay}"></ContentControl>
+        <Grid Grid.Row="2">
+            <DataGrid 
+                ItemsSource="{Binding ChosenProducts}"
+                ></DataGrid>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+            <Button Height="19" Width="Auto">Save To History</Button>
+        </StackPanel>
+    </Grid>
+</Window>

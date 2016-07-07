@@ -1,0 +1,27 @@
+﻿<Window x:Class="ShopSStorage.Views.DeleteWindow"
+        x:Name="DeleteWindowObject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShopSStorage.Views"
+        mc:Ignorable="d"
+        Title="DeleteWindow" Height="128.381" Width="359.202"
+        ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Label HorizontalAlignment="Center">Do you really want to delete this?</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Margin="10"
+                         Command="{Binding YesCommand}"
+                         CommandParameter="{Binding ElementName=DeleteWindowObject}"
+                         >YES</Button>
+                <Button Margin="10"
+                         Command="{Binding NoCommand}"
+                         CommandParameter="{Binding ElementName=DeleteWindowObject}"
+                        >NO</Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,4 +1,12 @@
-﻿namespace ShopSStorage.ViewModels
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows;
+using ShopSStorage.Views.AddToHistory;
+
+namespace ShopSStorage.ViewModels
 {
     using ShopSStorage.Models;
     using MvvmSchemats;
@@ -23,8 +31,11 @@
             get { return _selectedProduct;}
             set
             {
-                _selectedProduct = value;
-                OnPropertyChanged("ProductIsSelected");
+                if (_selectedProduct != value)
+                {
+                    _selectedProduct = value;
+                    OnPropertyChanged("ProductIsSelected");
+                }
             }
         }
         public Cathegory SelectedCathegory
@@ -32,12 +43,15 @@
             get { return _selectedCathegory; }
             set
             {
-                _selectedCathegory = value;
-                OnPropertyChanged("IsSelected");
-                OnPropertyChanged("IsSelectedAndCanBeDeleted");
-                if (IsSelected)
+                if (_selectedCathegory != value)
                 {
-                    GetProductsList();
+                    _selectedCathegory = value;
+                    OnPropertyChanged("IsSelected");
+                    OnPropertyChanged("IsSelectedAndCanBeDeleted");
+                    if (IsSelected)
+                    {
+                        GetProductsList();
+                    }
                 }
             }
         }
@@ -102,30 +116,45 @@
         public ICommand DeleteSelectedCathegoryCommand{get{return new RelayCommand(DeleteSelectedCathegory);}}
         public ICommand GetCathegoriesListCommand{get { return new RelayCommand(GetCathegoriesList); }}
         public  ICommand EditSelectedProductCommand { get { return new RelayCommand(EditSelectedProduct); } }
+        public ICommand AddToHistoryCommand { get { return new RelayCommand(AddToHistory); } }
 
         /// <summary>
         /// Command's Methods
         /// </summary>
+        private void AddToHistory()
+        {
+            AddToHistoryMainWindow historyMainViewModel = new AddToHistoryMainWindow {DataContext = new AddToHistoryMainViewModel(_context, Products, Cathegories)};
+            historyMainViewModel.ShowDialog();
+        }
         private void EditSelectedCathegory()
         {
             CathegoryWindow cathegoryWindow = new CathegoryWindow {DataContext = new CathegoryViewModel(_selectedCathegory)};
             cathegoryWindow.ShowDialog();
+            GetCathegoriesList();
         }
         private void DeleteSelectedProduct()
         {
             if (ProductIsSelected)
             {
-                _selectedProduct.Cathegory = _selectedCathegory;
-                _context.DeleteProduct(_selectedProduct);
-                Products.Remove(_selectedProduct);
-                OnPropertyChanged("IsSelectedAndCanBeDeleted");
-                
+                var deleteViewModel = new DeleteViewModel();
+                DeleteWindow deleteWindow = new DeleteWindow {DataContext = deleteViewModel};
+                deleteWindow.ShowDialog();
+                if (deleteViewModel.CanDelete)
+                {
+                    _selectedProduct.Cathegory = _selectedCathegory;
+                    _context.DeleteProduct(_selectedProduct);
+                    Products.Remove(_selectedProduct);
+                    OnPropertyChanged("IsSelectedAndCanBeDeleted");
+                }
+
             }
         }
         private void EditSelectedProduct()
         {
-            ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(SelectedProduct) };
+            ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context,SelectedProduct) };
             viewProductWindow.ShowDialog();
+            GetProductsList();
+            OnPropertyChanged("Products");
         }
         private void AddNewProduct()
         {
@@ -153,18 +182,26 @@
         {
             if (SelectedCathegory != null)
             {
-                _context.DeleteCathegory(SelectedCathegory);
-                Cathegories.Remove(SelectedCathegory);
-                SelectedCathegory = null;
-                Products.Clear();
+                var deleteViewModel = new DeleteViewModel();
+                DeleteWindow deleteWindow = new DeleteWindow { DataContext = deleteViewModel };
+                deleteWindow.ShowDialog();
+                if (deleteViewModel.CanDelete)
+                {
+                    _context.DeleteCathegory(SelectedCathegory);
+                    Cathegories.Remove(SelectedCathegory);
+                    SelectedCathegory = null;
+                    Products.Clear();
+                }
+                
             }
         }
+
         private void GetCathegoriesList()
         {
             Cathegories.Clear();
             foreach (var c in _context.GetCathegories())
                 Cathegories.Add(c);
         }
-#endregion
+        #endregion
     }
 }

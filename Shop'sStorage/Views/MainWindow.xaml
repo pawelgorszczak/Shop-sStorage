@@ -14,7 +14,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
-
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Button 
+                    Margin="0,0,10,0"
+                    Command="{Binding AddToHistoryCommand}"
+                    > Add sale to Hisory</Button>
+                <Button> Show sale History</Button>
+            </StackPanel>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -47,10 +55,26 @@
                     </DataTemplate>
                 </ListBox.Resources>
             </ListBox>
-            <DataGrid  Grid.Column="1" IsReadOnly="True"
-                       ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid Grid.Column="1" IsReadOnly="True"
+                       ItemsSource="{Binding Products}"
                        SelectedItem="{Binding SelectedProduct}"
-                       ></DataGrid>
+                       AutoGenerateColumns="False"
+                       >
+                <DataGrid.Columns>
+                    <!--<DataGridTemplateColumn Header="Product Name" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type models:Product}">
+                                <StackPanel Margin="5">
+                                    <Label Content="{Binding ProductName}" BorderThickness="0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Storage Amount" Binding="{Binding StorageAmount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Detail Price" Binding="{Binding DetailPrice}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
 
     </Grid>
