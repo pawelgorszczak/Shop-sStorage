@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using MvvmSchemats;
@@ -16,14 +17,27 @@ namespace ShopSStorage.ViewModels
     {
         #region Members
         private BusinessDbContext _context;
+        private SalesHistory _selectedSalesHistory;
         private ContentControl _contentControl;
         public ObservableCollection<Cathegory> Cathegories { get; private set; }
         public ObservableCollection<Product> Products { get; private set; }
-        public ObservableCollection<Product> ChosenProducts { get; private set; }
+        public ObservableCollection<SalesHistory> SalesHistories { get; private set; } = new ObservableCollection<SalesHistory>();
 
         public ContentControl AddToHistoryMainWindowContentControl
         {
             get { return _contentControl;}
+        }
+        public bool IsValid { get { return true; } }
+        public bool IsSelected { get { return _selectedSalesHistory != null; } }
+
+        public SalesHistory SelectedSalesHistory
+        {
+            get { return _selectedSalesHistory; }
+            set
+            {
+                _selectedSalesHistory = value;
+                OnPropertyChanged("IsSelected");
+            }
         }
         #endregion
 
@@ -34,26 +48,54 @@ namespace ShopSStorage.ViewModels
             Products = products;
             _context = context;
             _contentControl = null;
+            this.SaveToHistoryCommand = new RelayCommand<Window>(this.SaveToHistory);
         }
         #endregion
 
         #region Commands
+        public RelayCommand<Window> SaveToHistoryCommand { get; private set; }
         public ICommand AddNewCommand { get { return new RelayCommand(AddNew); } }
-        public ICommand DeleteCommand { get { return new RelayCommand(Delete); } }
+        public ICommand DeleteSelectedSalesHistoryCommand { get { return new RelayCommand(DeleteSelectedSalesHistory); } }
         #endregion
 
         #region Functions
 
+        private void SaveToHistory(Window window)
+        {
+            var temp = DateTime.Now;
+            foreach (var obj in SalesHistories)
+            {
+                obj.SoldDateTime = temp;
+            }
+            _context.AddSalesHistories(SalesHistories);
+            window.Close();
+        }
+        private void DeleteSelectedSalesHistory()
+        {
+            if (_selectedSalesHistory != null)
+            {
+                SalesHistories.Remove(_selectedSalesHistory);
+            }
+        }
         private void AddNew()
         {
-            _contentControl = new AddUserControl();
+            var addToHistoryAddUserControlViewModel = new AddToHistoryAddUserControlViewModel(_context, Cathegories,
+                SalesHistories);
+            addToHistoryAddUserControlViewModel.ContentControlForceToClose += this.OnContentControlForceToClose;
+            _contentControl = new AddUserControl {DataContext = addToHistoryAddUserControlViewModel};
             OnPropertyChanged("AddToHistoryMainWindowContentControl");
         }
-        private void Delete()
+        #endregion
+
+        #region CloseControl Event
+
+        //event
+        public void OnContentControlForceToClose(object source, EventArgs e)
         {
             _contentControl = null;
             OnPropertyChanged("AddToHistoryMainWindowContentControl");
         }
+
         #endregion
     }
 }

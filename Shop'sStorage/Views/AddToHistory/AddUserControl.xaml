@@ -1,11 +1,59 @@
 ﻿<UserControl x:Class="ShopSStorage.Views.AddToHistory.AddUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
+             xmlns:model="clr-namespace:ShopSStorage.Models"
+             mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="448">
     <Grid>
-        <TextBox> I co kurde raz dwa trzy</TextBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ListBox
+            Grid.Column="0"
+            Margin="10"
+            ItemsSource="{Binding Cathegories}"
+            SelectedItem="{Binding SelectedCathegory}">
+            <ListBox.Resources>
+                <DataTemplate DataType="{x:Type model:Cathegory}">
+                    <StackPanel>
+                        <Label Content="{Binding CathegoryName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.Resources>
+        </ListBox>
+        <DataGrid
+            AutoGenerateColumns="False"
+            Grid.Column="1"
+            Margin="10" 
+            ItemsSource="{Binding Products}"
+            CanUserAddRows="False"
+            >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Select">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox 
+                                IsChecked ="{Binding IsSelected, 
+                                                     Mode=TwoWay, 
+                                                     UpdateSourceTrigger=PropertyChanged}"
+                                        />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
+            </DataGrid.Columns>
+            </DataGrid>
+        <Button
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding AddCommand}"
+            >
+            Add
+        </Button>
     </Grid>
 </UserControl>

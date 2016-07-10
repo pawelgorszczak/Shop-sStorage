@@ -14,9 +14,9 @@ namespace ShopSStorage.Models
         {
             
         }
-        public int HistoryId { get; set; }
-        public Product Product { get; set; }
+        public int SalesHistoryId { get; set; }
         public int SoldAmount { get; set; }
         public DateTime SoldDateTime { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

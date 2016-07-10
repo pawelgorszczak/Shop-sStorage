@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopSStorage.Models
 {
@@ -15,6 +16,10 @@ namespace ShopSStorage.Models
         public virtual Cathegory Cathegory { get; set; }
         [Timestamp]
         public byte[] RowVersionBytes { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public virtual ICollection<SalesHistory> SalesHistories { get; set; }
 
     }
 }

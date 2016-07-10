@@ -1,8 +1,10 @@
 ﻿<Window x:Class="ShopSStorage.Views.AddToHistory.AddToHistoryMainWindow"
+        x:Name="WindowHandler"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
         Title="AddToHistoryMainWindow" Height="388.286" Width="468" ResizeMode="NoResize">
     <Grid Margin="10">
@@ -17,19 +19,64 @@
                 Margin="0,0,10,0"
                 Command="{Binding AddNewCommand}"
                 >Add New</Button>
-            <Button Margin="0,0,10,0">Edit</Button>
             <Button
-                Command="{Binding DeleteCommand}"
+                Command="{Binding DeleteSelectedSalesHistoryCommand}"
+                IsEnabled ="{Binding IsSelected}"
                 >Delete</Button>
         </StackPanel>
         <ContentControl Grid.Row="1" Content="{Binding AddToHistoryMainWindowContentControl, Mode=OneWay}"></ContentControl>
         <Grid Grid.Row="2">
             <DataGrid 
-                ItemsSource="{Binding ChosenProducts}"
-                ></DataGrid>
+                ItemsSource="{Binding SalesHistories}"
+                SelectedItem ="{Binding SelectedSalesHistory}"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                >
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Cathegory Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type models:SalesHistory}">
+                                <Grid>
+                                    <Label Content="{Binding Product.Cathegory.CathegoryName}"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Product Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type models:SalesHistory}">
+                                <Grid>
+                                    <Label Content="{Binding Product.ProductName}"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Sold Amount">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type models:SalesHistory}">
+                                <Grid>
+                                    <TextBox
+                                        TextAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding SoldAmount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"></TextBox>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-            <Button Height="19" Width="Auto">Save To History</Button>
+            <Button 
+                Height="19" 
+                Width="Auto"
+                IsEnabled="{Binding IsValid}"
+                Command ="{Binding SaveToHistoryCommand}"
+                CommandParameter ="{Binding ElementName=WindowHandler}"
+                >Save To History</Button>
         </StackPanel>
     </Grid>
 </Window>

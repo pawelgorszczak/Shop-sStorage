@@ -55,6 +55,15 @@ namespace ShopSStorage.Models
         {
             return _context.Cathegories.Where(c =>c.CathegoryId == cathegory.CathegoryId).Select(p => p.Products).Single().ToList<Product>();
         }
+
+        public void AddSalesHistories(ICollection<SalesHistory> salesHistories)
+        {
+            foreach (var obj in salesHistories)
+            {
+                _context.SalesHistories.Add(obj);
+            }
+            _context.SaveChanges();
+        }
         #region Idisposable member
 
         public void Dispose()

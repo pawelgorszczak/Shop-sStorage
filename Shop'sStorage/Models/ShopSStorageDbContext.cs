@@ -11,6 +11,6 @@ namespace ShopSStorage.Models
         } 
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Cathegory> Cathegories { get; set; }
-        //public virtual DbSet<SalesHistory> SalesHistories { get; set; }
+        public virtual DbSet<SalesHistory> SalesHistories { get; set; }
     }
 }
