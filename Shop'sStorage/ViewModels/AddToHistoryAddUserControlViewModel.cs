@@ -19,12 +19,42 @@ namespace ShopSStorage.ViewModels
 
         private BusinessDbContext _context;
         private Cathegory _selectedCathegory;
+        private bool _isAllCheckBoxIsChecked;
         public ObservableCollection<Cathegory> Cathegories { get; private set; }
-        public ObservableCollection<Product> Products { get; private set; }
+        public ObservableCollection<Product> Products { get; set; }
         private ObservableCollection<SalesHistory> SalesHistories { get; set; }
 
-        bool CathegoryIsSelected { get { return _selectedCathegory != null; } }
-        
+        public bool CathegoryIsSelected { get { return _selectedCathegory != null; } }
+
+        public bool IsAllCheckBoxIsChecked
+        {
+            get { return _isAllCheckBoxIsChecked; }
+            set
+            {
+                _isAllCheckBoxIsChecked = value;
+                if (value)
+                {
+                    foreach (var obj in Products)
+                    {
+                        obj.IsSelected = true;
+                    }
+                }
+                else
+                {
+                    foreach (var obj in Products)
+                    {
+                        obj.IsSelected = false;
+                    }
+                }
+                var temp = Products.ToList();
+                Products.Clear();
+                foreach (var obj in temp)
+                {
+                    Products.Add(obj);
+                }
+                OnPropertyChanged("Products");
+            }
+        }
 
         public Cathegory SelectedCathegory
         {
@@ -41,6 +71,7 @@ namespace ShopSStorage.ViewModels
                         Products.Add(p);
                     }
                     OnPropertyChanged("Products");
+                    OnPropertyChanged("CathegoryIsSelected");
                 }
                 OnPropertyChanged();
             }
@@ -77,13 +108,16 @@ namespace ShopSStorage.ViewModels
 
         private void Add()
         {
-            foreach (var p in Products.Where(o =>o.IsSelected==true))
+            if (Products.Any() && Products.Count(o => o.IsSelected ==true)>0)
             {
-                var s = new SalesHistory() {Product = p};
-                if (SalesHistories.Count(o => o.Product == p) == 0)
-                    SalesHistories.Add(s);
+                foreach (var p in Products.Where(o => o.IsSelected == true))
+                {
+                    var s = new SalesHistory() {Product = p};
+                    if (SalesHistories.Count(o => o.Product == p) == 0)
+                        SalesHistories.Add(s);
+                }
+                OnContentControlForceToClose();
             }
-            OnContentControlForceToClose();
         }
         #endregion
         

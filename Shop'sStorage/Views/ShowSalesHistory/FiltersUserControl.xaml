@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="ShopSStorage.Views.ShowSalesHistory.FiltersUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShopSStorage.Views.ShowSalesHistory"
+             mc:Ignorable="d" Height="96.567" Width="519.502">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Label>Time</Label>
+            <StackPanel Orientation="Horizontal">
+                <Label>From</Label>
+                <DatePicker
+                    Margin="0,0,5,0"></DatePicker>
+                <Label>To</Label>
+                <DatePicker></DatePicker>
+            </StackPanel>
+        </StackPanel>
+        <DataGrid
+            AutoGenerateColumns="False"
+            Grid.Column="1"
+            Margin="10" 
+            ItemsSource="{Binding Cathegory}"
+            CanUserAddRows="False"
+            >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                IsChecked="{Binding DataContext.IsAllCheckBoxIsChecked, RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                >All</CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox 
+                                IsChecked ="{Binding IsSelected, 
+                                                     Mode=TwoWay,
+                                                     UpdateSourceTrigger=PropertyChanged}"
+                                        />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Cathegory Name" Binding="{Binding Cathegory}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

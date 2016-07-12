@@ -20,7 +20,8 @@
                     Margin="0,0,10,0"
                     Command="{Binding AddToHistoryCommand}"
                     > Add sale to Hisory</Button>
-                <Button> Show sale History</Button>
+                <Button
+                    Command="{Binding ShowSalesHistoryWindowCommand}"> Show sale History</Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

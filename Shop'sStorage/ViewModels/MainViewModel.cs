@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using ShopSStorage.Views.AddToHistory;
+using ShopSStorage.Views.ShowSalesHistory;
 
 namespace ShopSStorage.ViewModels
 {
@@ -83,6 +84,10 @@ namespace ShopSStorage.ViewModels
                 return false;
             }
         }
+        public void OnProductsHistoryAdded(object source, EventArgs e)
+        {
+            GetProductsList();
+        }
         public void GetProductsList()
         {
             if (IsSelected)
@@ -90,6 +95,7 @@ namespace ShopSStorage.ViewModels
                 Products.Clear();
                 foreach (var p in _context.GetProducts(SelectedCathegory))
                     Products.Add(p);
+                OnPropertyChanged("Products");
             }
         }
         #endregion
@@ -117,13 +123,22 @@ namespace ShopSStorage.ViewModels
         public ICommand GetCathegoriesListCommand{get { return new RelayCommand(GetCathegoriesList); }}
         public  ICommand EditSelectedProductCommand { get { return new RelayCommand(EditSelectedProduct); } }
         public ICommand AddToHistoryCommand { get { return new RelayCommand(AddToHistory); } }
+        public ICommand ShowSalesHistoryWindowCommand { get { return new RelayCommand(ShowSalesHistoryWindow);} }
 
         /// <summary>
         /// Command's Methods
         /// </summary>
+        public void ShowSalesHistoryWindow()
+        {
+            var obj = new ShowSalesHistoryMainViewModel(_context);
+            ShowSalesHistoryMainWindow showSalesHistoryMainWindow = new ShowSalesHistoryMainWindow {DataContext = obj};
+            showSalesHistoryMainWindow.ShowDialog();
+        }
         private void AddToHistory()
         {
-            AddToHistoryMainWindow historyMainViewModel = new AddToHistoryMainWindow {DataContext = new AddToHistoryMainViewModel(_context, Products, Cathegories)};
+            var obj = new AddToHistoryMainViewModel(_context, Products, Cathegories);
+            obj.ProductsAddedToHIstory += OnProductsHistoryAdded;
+            AddToHistoryMainWindow historyMainViewModel = new AddToHistoryMainWindow {DataContext = obj};
             historyMainViewModel.ShowDialog();
         }
         private void EditSelectedCathegory()
@@ -203,5 +218,7 @@ namespace ShopSStorage.ViewModels
                 Cathegories.Add(c);
         }
         #endregion
+
+
     }
 }

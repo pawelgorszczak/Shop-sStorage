@@ -62,13 +62,21 @@ namespace ShopSStorage.ViewModels
 
         private void SaveToHistory(Window window)
         {
-            var temp = DateTime.Now;
-            foreach (var obj in SalesHistories)
+            if (SalesHistories.Any())
             {
-                obj.SoldDateTime = temp;
+                var temp = DateTime.Now;
+                foreach (var obj in SalesHistories)
+                {
+                    obj.SoldDateTime = temp;
+                }
+                _context.AddSalesHistories(SalesHistories);
+                foreach (var obj in SalesHistories)
+                {
+                    _context.ChangeProductStorageAmount(obj.Product, obj.SoldAmount);
+                }
+                window.Close();
+                OnProductsAddedToHIstory();
             }
-            _context.AddSalesHistories(SalesHistories);
-            window.Close();
         }
         private void DeleteSelectedSalesHistory()
         {
@@ -96,6 +104,18 @@ namespace ShopSStorage.ViewModels
             OnPropertyChanged("AddToHistoryMainWindowContentControl");
         }
 
+        #endregion
+
+        #region ProductsAddedToHIstory Event
+        public delegate void ProductsAddedToHIstoryEventHandler(object source, EventArgs e);
+
+        public event ProductsAddedToHIstoryEventHandler ProductsAddedToHIstory;
+
+        public virtual void OnProductsAddedToHIstory()
+        {
+            if(ProductsAddedToHIstory!=null)
+                this.ProductsAddedToHIstory(this,EventArgs.Empty);
+        }
         #endregion
     }
 }

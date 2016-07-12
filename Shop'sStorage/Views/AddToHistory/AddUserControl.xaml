@@ -33,12 +33,20 @@
             CanUserAddRows="False"
             >
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Select">
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                IsChecked="{Binding DataContext.IsAllCheckBoxIsChecked, RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding DataContext.CathegoryIsSelected, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                >All</CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox 
                                 IsChecked ="{Binding IsSelected, 
-                                                     Mode=TwoWay, 
+                                                     Mode=TwoWay,
                                                      UpdateSourceTrigger=PropertyChanged}"
                                         />
                         </DataTemplate>

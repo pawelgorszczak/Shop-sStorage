@@ -71,6 +71,8 @@
     <Compile Include="ViewModels\CathegoryViewModel.cs" />
     <Compile Include="ViewModels\DeleteViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\ShowSalesHistoryFiltersUserControlViewModel.cs" />
+    <Compile Include="ViewModels\ShowSalesHistoryMainViewModel.cs" />
     <Compile Include="Views\AddToHistory\AddToHistoryMainWindow.xaml.cs">
       <DependentUpon>AddToHistoryMainWindow.xaml</DependentUpon>
     </Compile>
@@ -85,6 +87,12 @@
     </Compile>
     <Compile Include="Views\ProductWindow.xaml.cs">
       <DependentUpon>ProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowSalesHistory\FiltersUserControl.xaml.cs">
+      <DependentUpon>FiltersUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowSalesHistory\ShowSalesHistoryMainWindow.xaml.cs">
+      <DependentUpon>ShowSalesHistoryMainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddToHistory\AddToHistoryMainWindow.xaml">
       <SubType>Designer</SubType>
@@ -116,6 +124,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowSalesHistory\FiltersUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowSalesHistory\ShowSalesHistoryMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,6 +23,7 @@ namespace ShopSStorage.Models
             get { return _context; }
         }
 
+        #region Operation on Cathegories
         public ICollection<Cathegory> GetCathegories()
         {
             return _context.Cathegories.OrderBy(n => n.CathegoryName).ToList<Cathegory>();
@@ -39,7 +40,18 @@ namespace ShopSStorage.Models
             _context.Cathegories.AddOrUpdate(cathegory);
             _context.SaveChanges();
         }
+        #endregion
 
+        #region Operation on Products
+        public void ChangeProductStorageAmount(Product product, int soldAmount)
+        {
+            if (soldAmount > 0)
+            {
+                product.StorageAmount -= soldAmount;
+                _context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
         public void AddNewProduct(Product product)
         {
             _context.Products.AddOrUpdate(product);
@@ -55,7 +67,9 @@ namespace ShopSStorage.Models
         {
             return _context.Cathegories.Where(c =>c.CathegoryId == cathegory.CathegoryId).Select(p => p.Products).Single().ToList<Product>();
         }
+        #endregion
 
+        #region Operation on SalesHistories
         public void AddSalesHistories(ICollection<SalesHistory> salesHistories)
         {
             foreach (var obj in salesHistories)
@@ -64,6 +78,8 @@ namespace ShopSStorage.Models
             }
             _context.SaveChanges();
         }
+        #endregion
+
         #region Idisposable member
 
         public void Dispose()
