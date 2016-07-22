@@ -4,27 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ShopSStorage.Views.ShowSalesHistory"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:models="clr-namespace:ShopSStorage.Models"
              mc:Ignorable="d" Height="96.567" Width="519.502">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <Label>Time</Label>
             <StackPanel Orientation="Horizontal">
                 <Label>From</Label>
                 <DatePicker
-                    Margin="0,0,5,0"></DatePicker>
+                    Margin="0,0,5,0" 
+                    SelectedDate="{Binding DateFrom, Mode=OneWayToSource}"
+                    DisplayDateEnd="{Binding DateEnd, Mode=OneTime}"
+                    DisplayDateStart="{Binding DateStart, Mode=OneTime}"
+                    ></DatePicker>
                 <Label>To</Label>
-                <DatePicker></DatePicker>
+                <DatePicker
+                    SelectedDate="{Binding DateTo, Mode=OneWayToSource}"
+                    DisplayDateStart="{Binding DateStart, Mode=OneTime}"
+                    DisplayDateEnd="{Binding DateEnd, Mode=OneTime}"
+                    ></DatePicker>
             </StackPanel>
         </StackPanel>
         <DataGrid
             AutoGenerateColumns="False"
             Grid.Column="1"
             Margin="10" 
-            ItemsSource="{Binding Cathegory}"
+            ItemsSource="{Binding Cathegories}"
             CanUserAddRows="False"
             >
             <DataGrid.Columns>
@@ -46,8 +57,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn IsReadOnly="True" Header="Cathegory Name" Binding="{Binding Cathegory}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Cathegory Name" Binding="{Binding CathegoryName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Column="2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Command="{Binding ShowSalesHistoryWithFiltersCommand}"
+                >Show</Button>
     </Grid>
 </UserControl>

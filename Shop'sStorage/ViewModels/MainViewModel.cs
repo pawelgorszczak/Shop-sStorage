@@ -186,6 +186,7 @@ namespace ShopSStorage.ViewModels
             
             GetProductsList();
             OnPropertyChanged("Products");
+            OnPropertyChanged("IsSelectedAndCanBeDeleted");
         }
         private void AddNewCathegory()
         {

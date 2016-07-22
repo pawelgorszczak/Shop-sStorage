@@ -14,7 +14,7 @@ namespace ShopSStorage.Models
         [StringLength(30)]
         public string CathegoryName { get; set; }
 
-        //public bool IsSelected { get; set; }
+        public bool IsSelected { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

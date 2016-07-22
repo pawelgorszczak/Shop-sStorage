@@ -41,7 +41,8 @@ namespace ShopSStorage.ViewModels
                 {
                     FiltersContentControl = null;
                 }
-                OnPropertyChanged();    
+                OnPropertyChanged();
+                OnPropertyChanged("CanShowSalesHistory");    
             }
         }
         public ContentControl FiltersContentControl
@@ -58,7 +59,7 @@ namespace ShopSStorage.ViewModels
         }
 
         public bool CanShowSalesHistory
-        { get {return true; } }
+        { get {return _showFiltersIsChecked == false; } }
         #endregion
         #region Constructors
         public ShowSalesHistoryMainViewModel(BusinessDbContext Context)
@@ -78,6 +79,11 @@ namespace ShopSStorage.ViewModels
         private void ShowFilters()
         {
             var obj = new ShowSalesHistoryFiltersUserControlViewModel(_context);
+            obj.LoadNewSalesHistoryData += (object source, EventArgs e) =>
+            {
+                SalesHistories = (IList) source;
+                OnPropertyChanged("SalesHistories");
+            };
             FiltersContentControl = new FiltersUserControl {DataContext = obj};
         }
         private void ShowSalesHistory()
@@ -99,13 +105,9 @@ namespace ShopSStorage.ViewModels
                     }).Distinct().ToList();
                 OnPropertyChanged("SalesHistories");
             };
-
-            /*Thread nThread = new Thread(new ThreadStart(GetSalesHistoriesNoFiltersAction));
-            nThread.IsBackground = true;
-            nThread.Start();*/
+            
             GetSalesHistoriesNoFiltersAction();
-            //var SalesHistories2 = _context.ShopSStorageDbContext.SalesHistories.ToList<SalesHistory>();
-            //OnPropertyChanged("SalesHistories");
+            
 
         }
         #endregion
