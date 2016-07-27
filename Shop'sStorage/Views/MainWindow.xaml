@@ -60,6 +60,9 @@
                        ItemsSource="{Binding Products}"
                        SelectedItem="{Binding SelectedProduct}"
                        AutoGenerateColumns="False"
+                       RowBackground="White" 
+                       AlternatingRowBackground="Gainsboro"
+                       AlternationCount="2"
                        >
                 <DataGrid.Columns>
                     <!--<DataGridTemplateColumn Header="Product Name" IsReadOnly="True">
