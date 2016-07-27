@@ -94,6 +94,10 @@
     <Compile Include="Views\ShowSalesHistory\ShowSalesHistoryMainWindow.xaml.cs">
       <DependentUpon>ShowSalesHistoryMainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="themes\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AddToHistory\AddToHistoryMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,6 +178,7 @@
       <Name>MvvmSchemats</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

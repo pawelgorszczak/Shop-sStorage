@@ -6,11 +6,11 @@
         xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
         Title="MainWindow" Height="452" Width="1007"
-        Background="DarkGray">
+        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
