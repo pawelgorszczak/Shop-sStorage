@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:model="clr-namespace:ShopSStorage.Models"
              mc:Ignorable="d"
-             d:DesignHeight="100" d:DesignWidth="448">
+             d:DesignHeight="100" d:DesignWidth="448" MaxHeight="150">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <ListBox
             Grid.Column="0"
@@ -52,7 +52,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn IsReadOnly="True" Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
+                <DataGridTextColumn  Width="*" IsReadOnly="True" Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
             </DataGrid.Columns>
             </DataGrid>
         <Button

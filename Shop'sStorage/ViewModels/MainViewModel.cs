@@ -131,19 +131,19 @@ namespace ShopSStorage.ViewModels
         public void ShowSalesHistoryWindow()
         {
             var obj = new ShowSalesHistoryMainViewModel(_context);
-            ShowSalesHistoryMainWindow showSalesHistoryMainWindow = new ShowSalesHistoryMainWindow {DataContext = obj};
+            ShowSalesHistoryMainWindow showSalesHistoryMainWindow = new ShowSalesHistoryMainWindow {DataContext = obj, WindowStartupLocation = WindowStartupLocation.CenterScreen };
             showSalesHistoryMainWindow.ShowDialog();
         }
         private void AddToHistory()
         {
             var obj = new AddToHistoryMainViewModel(_context, Products, Cathegories);
             obj.ProductsAddedToHIstory += OnProductsHistoryAdded;
-            AddToHistoryMainWindow historyMainViewModel = new AddToHistoryMainWindow {DataContext = obj};
+            AddToHistoryMainWindow historyMainViewModel = new AddToHistoryMainWindow {DataContext = obj, WindowStartupLocation = WindowStartupLocation.CenterScreen };
             historyMainViewModel.ShowDialog();
         }
         private void EditSelectedCathegory()
         {
-            CathegoryWindow cathegoryWindow = new CathegoryWindow {DataContext = new CathegoryViewModel(_selectedCathegory)};
+            CathegoryWindow cathegoryWindow = new CathegoryWindow {DataContext = new CathegoryViewModel(_selectedCathegory), WindowStartupLocation = WindowStartupLocation.CenterScreen };
             cathegoryWindow.ShowDialog();
             GetCathegoriesList();
         }
@@ -152,7 +152,7 @@ namespace ShopSStorage.ViewModels
             if (ProductIsSelected)
             {
                 var deleteViewModel = new DeleteViewModel();
-                DeleteWindow deleteWindow = new DeleteWindow {DataContext = deleteViewModel};
+                DeleteWindow deleteWindow = new DeleteWindow {DataContext = deleteViewModel, WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 deleteWindow.ShowDialog();
                 if (deleteViewModel.CanDelete)
                 {
@@ -166,7 +166,7 @@ namespace ShopSStorage.ViewModels
         }
         private void EditSelectedProduct()
         {
-            ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context,SelectedProduct) };
+            ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context,SelectedProduct), WindowStartupLocation = WindowStartupLocation.CenterScreen };
             viewProductWindow.ShowDialog();
             GetProductsList();
             OnPropertyChanged("Products");
@@ -175,12 +175,12 @@ namespace ShopSStorage.ViewModels
         {
             if (IsSelected)
             {
-                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context, new Product() { Cathegory = _selectedCathegory}) };
+                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(_context, new Product() { Cathegory = _selectedCathegory}), WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 viewProductWindow.ShowDialog();
             }
             else
             {
-                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel() };
+                ProductWindow viewProductWindow = new ProductWindow { DataContext = new ProductViewModel(), WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 viewProductWindow.ShowDialog();
             }
             
@@ -190,7 +190,7 @@ namespace ShopSStorage.ViewModels
         }
         private void AddNewCathegory()
         {
-            CathegoryWindow cathegoryWindow = new CathegoryWindow { DataContext = new CathegoryViewModel() };
+            CathegoryWindow cathegoryWindow = new CathegoryWindow { DataContext = new CathegoryViewModel(), WindowStartupLocation = WindowStartupLocation.CenterScreen };
             cathegoryWindow.ShowDialog();
             GetCathegoriesList();
         }
@@ -199,7 +199,7 @@ namespace ShopSStorage.ViewModels
             if (SelectedCathegory != null)
             {
                 var deleteViewModel = new DeleteViewModel();
-                DeleteWindow deleteWindow = new DeleteWindow { DataContext = deleteViewModel };
+                DeleteWindow deleteWindow = new DeleteWindow { DataContext = deleteViewModel, WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 deleteWindow.ShowDialog();
                 if (deleteViewModel.CanDelete)
                 {

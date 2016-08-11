@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
-        Title="AddToHistoryMainWindow" Height="388.286" Width="468" ResizeMode="NoResize">
+        Title="AddToHistoryMainWindow" Height="388.286" Width="635.005" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
