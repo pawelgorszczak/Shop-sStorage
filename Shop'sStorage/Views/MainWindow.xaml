@@ -73,9 +73,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>-->
-                    <DataGridTextColumn  Width="*" Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
-                    <DataGridTextColumn  Width="*" Header="Storage Amount" Binding="{Binding StorageAmount}"></DataGridTextColumn>
-                    <DataGridTextColumn  Width="*" Header="Detail Price" Binding="{Binding DetailPrice}"></DataGridTextColumn>
+                    <DataGridTextColumn  Width="auto" Header="Product Name" Binding="{Binding ProductName}"></DataGridTextColumn>
+                    <DataGridTextColumn  Width="auto" Header="Storage Amount" Binding="{Binding StorageAmount}"></DataGridTextColumn>
+                    <DataGridTextColumn  Width="auto" Header="Detail Price" Binding="{Binding DetailPrice}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
