@@ -23,8 +23,10 @@ namespace ShopSStorage.ViewModels
         public ObservableCollection<Cathegory> Cathegories { get; private set; }
         private Cathegory _selectedCathegory;
         private Product _selectedProduct;
+
         public ObservableCollection<Product> Products { get; private set; }
 
+        
 
 
         public Product SelectedProduct

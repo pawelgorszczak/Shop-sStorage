@@ -5,7 +5,7 @@ namespace ShopSStorage.Models
 {
     public class ShopSStorageDbContext : DbContext
     {
-        public ShopSStorageDbContext() : base("name=ShopSStorageConnectionString")
+        public ShopSStorageDbContext() : base("name=ShopSStorageConnectionString2")
         {
             //Database.SetInitializer<ShopSStorageDbContext>(new DropCreateDatabaseIfModelChanges<ShopSStorageDbContext>());
         } 

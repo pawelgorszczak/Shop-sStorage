@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:ShopSStorage.Models"
+        xmlns:viewModels="clr-namespace:ShopSStorage.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="452" Width="1007"
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+    <Window.Resources>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -47,13 +50,13 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <ListBox Grid.Column="0" ItemsSource="{Binding Cathegories}" SelectedItem="{Binding SelectedCathegory}">
-                <ListBox.Resources>
+                <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:Cathegory}">
                        <StackPanel Orientation="Horizontal">
-                           <Label Content="{Binding CathegoryName}"></Label>
+                           <Label Content="{Binding CathegoryName}" ></Label>
                        </StackPanel>
                     </DataTemplate>
-                </ListBox.Resources>
+                </ListBox.ItemTemplate>
             </ListBox>
             <DataGrid Grid.Column="1" IsReadOnly="True"
                        ItemsSource="{Binding Products}"
@@ -61,8 +64,7 @@
                        AutoGenerateColumns="False"
                        RowBackground="White" 
                        AlternatingRowBackground="Gainsboro"
-                       AlternationCount="2"
-                       >
+                       AlternationCount="2">
                 <DataGrid.Columns>
                     <!--<DataGridTemplateColumn Header="Product Name" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
