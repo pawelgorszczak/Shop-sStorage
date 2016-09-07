@@ -5,7 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:model="clr-namespace:ShopSStorage.Models"
              mc:Ignorable="d"
-             d:DesignHeight="100" d:DesignWidth="448" MaxHeight="150">
+             d:DesignHeight="100" d:DesignWidth="448" MaxHeight="150"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />

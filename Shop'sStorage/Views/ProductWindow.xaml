@@ -4,24 +4,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ShopSStorage.Views"
         xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
-        Title="ProductWindow" Height="300" Width="300" ResizeMode="NoResize">
+        Title="ProductWindow" Height="416.3" Width="488" ResizeMode="NoResize"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="4*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Name:</Label>
+        <Label  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Name:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
                  Text="{Binding ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Total Starage Amount:</Label>
@@ -41,23 +46,23 @@
             </TextBox>
             <Button Grid.Column="1" HorizontalAlignment="Right" Content="Select" Command="{Binding CanSelectCommand}"/>
         </Grid>
-        <Button Grid.Column="0" Grid.Row="4" 
+        <Button Grid.Column="0" Grid.Row="4" Margin="0,0,10,0"
                 Command="{Binding AddNewProductCommand}"
                 CommandParameter="{Binding ElementName=ProductWindowObject}" IsEnabled="{Binding NewProductIsValid}">Add/Save</Button>
-        <ListView x:Name="LstViewCathegories" 
+        <ListBox Margin="0,10,0,0" x:Name="LstViewCathegories" 
                   Grid.Row="4" 
                   Grid.Column="1" 
                   ItemsSource="{Binding Cathegories}"
                   Visibility="{Binding IsVisible}"
                   SelectedItem="{Binding Cathegory, Mode=TwoWay}">
-            <ListView.Resources>
+            <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Cathegory}">
-                    <Grid>
+                    <StackPanel>
                         <Label Content="{Binding CathegoryName}"></Label>
-                    </Grid>
+                    </StackPanel>
                 </DataTemplate>
-            </ListView.Resources>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>

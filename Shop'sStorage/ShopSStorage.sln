@@ -7,16 +7,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSStorage", "ShopSStorag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmSchemats", "..\MvvmSchemats\MvvmSchemats.csproj", "{16C8DCC2-CA6B-4495-82BB-175745B417DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StylesLibraries", "StylesLibraries", "{21CC7713-86AE-4D50-9660-93F9382A7CE0}"
+	ProjectSection(SolutionItems) = preProject
+		..\styles\MaterialDesignColors.dll = ..\styles\MaterialDesignColors.dll
+		..\styles\MaterialDesignThemes.Wpf.dll = ..\styles\MaterialDesignThemes.Wpf.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		AppVeyor|Any CPU = AppVeyor|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D35C592-5153-4FDC-8486-C2C40B66775A}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{8D35C592-5153-4FDC-8486-C2C40B66775A}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{8D35C592-5153-4FDC-8486-C2C40B66775A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D35C592-5153-4FDC-8486-C2C40B66775A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D35C592-5153-4FDC-8486-C2C40B66775A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D35C592-5153-4FDC-8486-C2C40B66775A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C8DCC2-CA6B-4495-82BB-175745B417DE}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{16C8DCC2-CA6B-4495-82BB-175745B417DE}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{16C8DCC2-CA6B-4495-82BB-175745B417DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16C8DCC2-CA6B-4495-82BB-175745B417DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C8DCC2-CA6B-4495-82BB-175745B417DE}.Release|Any CPU.ActiveCfg = Release|Any CPU

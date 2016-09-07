@@ -40,7 +40,7 @@ namespace ShopSStorage.ViewModels
             }
         }
         public DateTime DateEnd { get { return DateTime.Now; } }
-        public DateTime DateStart { get { return _context.ShopSStorageDbContext.SalesHistories.Select(o => o.SoldDateTime).Min(); } }
+        public DateTime DateStart { get { return (_context.ShopSStorageDbContext.SalesHistories.Any())? _context.ShopSStorageDbContext.SalesHistories.Select(o => o.SoldDateTime).Min(): DateTime.Now; } }
         public bool IsAllCheckBoxIsChecked
         {
             get { return _isAllCheckBoxIsChecked; }

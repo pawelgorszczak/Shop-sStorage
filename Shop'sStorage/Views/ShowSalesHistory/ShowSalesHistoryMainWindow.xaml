@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShopSStorage.Views.ShowSalesHistory"
         mc:Ignorable="d"
-        Title="ShowSalesHistoryMainWindow" Height="547.42" Width="743.832">
+        Title="ShowSalesHistoryMainWindow" Height="647.92" Width="743.832"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel 
             Orientation="Horizontal"
@@ -19,9 +25,12 @@
             <CheckBox IsChecked="{Binding ShowFiltersIsChecked}"/>
             <Label>Adjust filters</Label>
         </StackPanel>
-        <ContentControl 
+        <ContentControl
             Grid.Row="1"
             Content="{Binding FiltersContentControl}"
+            
+            HorizontalContentAlignment="Stretch" 
+            VerticalContentAlignment="Stretch"
             />
         <Button 
             HorizontalAlignment="Center"

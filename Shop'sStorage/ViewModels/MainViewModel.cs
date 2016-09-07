@@ -122,7 +122,6 @@ namespace ShopSStorage.ViewModels
         public ICommand AddNewProductCommand{get{return new RelayCommand(AddNewProduct);}}
         public ICommand AddNewCathegoryCommand{get{return new RelayCommand(AddNewCathegory);}}
         public ICommand DeleteSelectedCathegoryCommand{get{return new RelayCommand(DeleteSelectedCathegory);}}
-        public ICommand GetCathegoriesListCommand{get { return new RelayCommand(GetCathegoriesList); }}
         public  ICommand EditSelectedProductCommand { get { return new RelayCommand(EditSelectedProduct); } }
         public ICommand AddToHistoryCommand { get { return new RelayCommand(AddToHistory); } }
         public ICommand ShowSalesHistoryWindowCommand { get { return new RelayCommand(ShowSalesHistoryWindow);} }

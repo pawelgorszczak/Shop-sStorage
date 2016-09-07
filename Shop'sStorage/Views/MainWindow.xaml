@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:ShopSStorage.Models"
-        xmlns:viewModels="clr-namespace:ShopSStorage.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="452" Width="1007"
-        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+        Title="MainWindow" Height="527" Width="1093"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        >
     <Window.Resources>
     </Window.Resources>
     <Grid>
@@ -17,13 +22,13 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="2,5,0,30">
                 <Button 
                     Margin="0,0,10,0"
                     Command="{Binding AddToHistoryCommand}"
-                    > Add sale to Hisory</Button>
+                    >Add sale to Hisory</Button>
                 <Button
-                    Command="{Binding ShowSalesHistoryWindowCommand}"> Show sale History</Button>
+                    Command="{Binding ShowSalesHistoryWindowCommand}">Show sale History</Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -31,16 +36,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Height="19" Margin="2" Command="{Binding AddNewCathegoryCommand}">New</Button>
-                <Button Height="19" Margin="2" Command="{Binding GetCathegoriesListCommand}">Refresh</Button>
-                <Button Height="19" Margin="2" Command="{Binding EditSelectedCathegoryCommand}" IsEnabled="{Binding IsSelected}">Edit</Button>
-                <Button Height="19" Margin="2" Command="{Binding DeleteSelectedCathegoryCommand}" IsEnabled="{Binding IsSelectedAndCanBeDeleted}">Delete</Button>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding AddNewCathegoryCommand}">New</Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding EditSelectedCathegoryCommand}" IsEnabled="{Binding IsSelected}">Edit</Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding DeleteSelectedCathegoryCommand}" IsEnabled="{Binding IsSelectedAndCanBeDeleted}">Delete</Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Height="19" Margin="2" Command="{Binding AddNewProductCommand}">Add</Button>
-                <Button Margin="2" Command="{Binding EditSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Edit</Button>
-                <Button Margin="2" Command="{Binding DeleteSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Delete</Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding AddNewProductCommand}">Add</Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding EditSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Edit</Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="2" Command="{Binding DeleteSelectedProductCommand}" IsEnabled="{Binding ProductIsSelected}">Delete</Button>
             </StackPanel>
         </Grid>
 
@@ -49,22 +53,22 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" ItemsSource="{Binding Cathegories}" SelectedItem="{Binding SelectedCathegory}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:Cathegory}">
-                       <StackPanel Orientation="Horizontal">
-                           <Label Content="{Binding CathegoryName}" ></Label>
-                       </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <GroupBox Header="Categories" >
+                <ListBox Grid.Row="1" ItemsSource="{Binding Cathegories}" SelectedItem="{Binding SelectedCathegory}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:Cathegory}">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding CathegoryName}" ></Label>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
             <DataGrid Grid.Column="1" IsReadOnly="True"
                        ItemsSource="{Binding Products}"
                        SelectedItem="{Binding SelectedProduct}"
                        AutoGenerateColumns="False"
-                       RowBackground="White" 
-                       AlternatingRowBackground="Gainsboro"
-                       AlternationCount="2">
+                       >
                 <DataGrid.Columns>
                     <!--<DataGridTemplateColumn Header="Product Name" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>

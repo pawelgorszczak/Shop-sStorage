@@ -6,7 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:ShopSStorage.Models"
         mc:Ignorable="d"
-        Title="AddToHistoryMainWindow" Height="388.286" Width="635.005" ResizeMode="NoResize">
+        Title="AddToHistoryMainWindow" Height="628.347" Width="635.005" ResizeMode="NoResize"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,7 +20,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Height="19">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button 
                 Margin="0,0,10,0"
                 Command="{Binding AddNewCommand}"
@@ -71,7 +77,6 @@
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
             <Button 
-                Height="19" 
                 Width="Auto"
                 IsEnabled="{Binding IsValid}"
                 Command ="{Binding SaveToHistoryCommand}"

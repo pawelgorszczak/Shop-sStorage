@@ -6,11 +6,17 @@
              xmlns:local="clr-namespace:ShopSStorage.Views.ShowSalesHistory"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:models="clr-namespace:ShopSStorage.Models"
-             mc:Ignorable="d" Height="96.567" Width="519.502">
+             mc:Ignorable="d" Height="245.887" Width="700"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Vertical">
